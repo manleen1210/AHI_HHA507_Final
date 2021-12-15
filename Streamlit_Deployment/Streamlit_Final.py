@@ -163,7 +163,7 @@ MNC_fig1 = px.bar(NY_NonSB_Outpatient_MNCs, x='index', y='mortality_national_com
 st.plotly_chart(MNC_fig1)
 
 Outpt_services = NY_nonsb_merge_outpt_nonull['outpatient_services'].value_counts().reset_index()
-Oupt_fig1 = px.bar(Outpt_services, x='index', y='outpatient_services')
+Outpt_fig1 = px.bar(Outpt_services, x='index', y='outpatient_services')
 st.plotly_chart(Outpt_fig1)
 
 # Question 4
