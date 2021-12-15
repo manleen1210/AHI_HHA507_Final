@@ -65,31 +65,37 @@ inpatient2015['provider_id'] = inpatient2015['provider_id'].astype(str)
 
 st.header('Hospital/Outpatient Merged Data')
 df_merge_outpt = outpatient2015.merge(hospital_info, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
-st.dataframe(df_merge_outpt)
+df_merge_outpt_preview = df_merge_outpt.sample(20)
+st.dataframe(df_merge_outpt_preview)
 
 st.header('Hospital/Inpatient Merged Data')
 df_merge_inpt = inpatient2015.merge(hospital_info, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
-st.dataframe(df_merge_inpt)
+df_merge_inpt_preview = df_merge_inpt.sample(20)
+st.dataframe(df_merge_inpt_preview)
 
 st.subheader('Stonybrook Data Hospital/Outpatient')
 # Stony brook data for Hospital/outpatient merged dataset
 sb_merge_outpt = df_merge_outpt[df_merge_outpt['provider_id'] == '330393']
-st.dataframe(sb_merge_outpt)
+sb_merge_outpt_preview = sb_merge_outpt.sample(20)
+st.dataframe(sb_merge_outpt_preview)
 
 st.subheader('Non Stonybrook Data Hospital/Outpatient')
 # Non Stony Brook Data for Hospital/Outpatient merged dataset
 nonsb_merge_outpt = df_merge_outpt[df_merge_outpt['provider_id'] != '330393']
-st.dataframe(nonsb_merge_outpt)
+nonsb_merge_outpt_preview = nonsb_merge_outpt.sample(20)
+st.dataframe(nonsb_merge_outpt_preview)
 
 st.subheader('Stonybrook Data Hospital/Inpatient')
 # Stony brook data for Hospital/Inpatient merged dataset
 sb_merge_inpt = df_merge_inpt[df_merge_inpt['provider_id'] == '330393']
-st.dataframe(sb_merge_inpt)
+sb_merge_inpt_preview = sb_merge_inpt.sample(20)
+st.dataframe(sb_merge_inpt_preview)
 
 st.subheader('Non Stonybrook Data Hospital/Inpatient')
 # Non Stony Brook Data for Hospital/Inpatient merged dataset
 nonsb_merge_inpt = df_merge_inpt[df_merge_inpt['provider_id'] != '330393']
-st.dataframe(nonsb_merge_inpt)
+nonsb_merge_inpt_preview = nonsb_merge_inpt.sample(20)
+st.dataframe(nonsb_merge_inpt_preview)
 
 
 st.write('Question1: How does the data for Stony Brook compare to other outpatient facilities for the most expensive APCs?')
