@@ -143,12 +143,14 @@ st.dataframe(NY_nonsb_merge_inpt_preview)
 #Cleaning columns of interest
 NY_nonsb_merge_outpt_nonull = NY_nonsb_merge_outpt[~NY_nonsb_merge_outpt['mortality_national_comparison'].isnull()]
 NY_nonsb_merge_inpt_nonull = NY_nonsb_merge_inpt[~NY_nonsb_merge_inpt['mortality_national_comparison'].isnull()]
+readmission_hospital_nonull = hospital_info[~hospital_info['readmission_national_comparison_footnote'].isnull()]
+effectiveness_hospital_nonull = hospital_info[~hospital_info['effectiveness_of_care_national_comparison_footnote'].isnull()]
 
 
 # Question 3
 st.subheader('Question 3')
 st.write('Question3: How does the data for Stony Brook compare to other NY outpatient facilities when looking at the mortality national comparison and outpatient services?')
-st.markdown('The pivot tables here show that the Mortality rate for Stony Brook is Above the National Average whereas majority of NY hospitals rank the same as national average in mortality and also have a much higher rate of outpatient services')
+st.markdown('The pivot tables here show that the Mortality rate for Stony Brook is Above the National Average whereas majority of NY hospitals rank the Same as national average in mortality and their average number of outpatient services (986.006) is much higher than that of Stonybrook (307.538)')
 
 # Stony Brook -> NY (mortality national comparison (MNC)) (Outpatient)
 st.subheader('Stonybrook Outpatient Mortality National Comparison Pivot Table')
@@ -162,14 +164,13 @@ NY_NonSB_Outpatient_MNCs = NY_nonsb_merge_outpt_nonull['mortality_national_compa
 MNC_fig1 = px.bar(NY_NonSB_Outpatient_MNCs, x='index', y='mortality_national_comparison')
 st.plotly_chart(MNC_fig1)
 
-Outpt_services = NY_nonsb_merge_outpt_nonull['outpatient_services'].value_counts().reset_index()
-Outpt_fig1 = px.bar(Outpt_services, x='index', y='outpatient_services')
-st.plotly_chart(Outpt_fig1)
+Avg_outpt_NY_Services = NY_NonSB_Outpatient_MNCs_pivot['outpatient_services'].mean()
+st.dataframe(Avg_outpt_NY_Services)
 
 # Question 4
 st.subheader('Question 4')
 st.write('Question4: How does the data for Stony Brook compare to other NY inpatient facilities when looking at the mortality national comparison and total discharges?')
-st.markdown('StonyBrook facilities fall in the above national average in the mortality comparison and majority of other inpatient NY facilities fall in the same as national average for mortality rates. The total discharges for ')
+st.markdown('StonyBrook facilities fall in the Above national average in the mortality comparison and majority of other inpatient NY facilities fall in the Same as national average for mortality rates. The total discharges for Stonybrook (40.2890) is higher than the NY average (35.178)')
 
 # Stony Brook -> NY (mortality national comparison (MNC)) (Inpatient)
 st.subheader('StonyBrook Inpatient Mortality National Comparison Pivot Table')
@@ -183,7 +184,28 @@ NY_NonSB_Inpatient_MNCs = NY_nonsb_merge_inpt_nonull['mortality_national_compari
 MNC_fig2 = px.bar(NY_NonSB_Inpatient_MNCs, x='index', y='mortality_national_comparison')
 st.plotly_chart(MNC_fig2)
 
+Avg_inpt_NY_Discharges = NY_NonSB_Inpatient_MNCs_pivot['total_discharges'].mean()
+st.dataframe(Avg_inpt_NY_Discharges)
 
+
+# Question 5
+st.subheader('Question 5')
+st.write('Question5: What is the correlation between effectiveness of care compared to the readmission national comparison?')
+st.markdown('xx')
+st.subheader('Effectiveness of care vs Readmission Comparison Pivot Table')
+readmission_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'effectiveness_of_care_national_comparison'],values=['readmission_national_comparison_footnote'])
+st.dataframe(readmission_pivot)
+Chart1 = readmission_hospital_nonull['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']
+st.bar_chart(Chart1)
+
+
+#Question 6 
+st.subheader('Question 6')
+st.write('Question6: What is the correlation between effectiveness of care compared to the safety of care national comparison?')
+st.markdown('xx')
+st.subheader('Effectiveness of care vs Safety of Care Pivot Table')
+Care_effectiveness_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'safety_of_care_national_comparison'],values=['effectiveness_of_care_national_comparison_footnote'])
+st.dataframe(Care_effectiveness_pivot)
 
 # Quickly creating a pivot table 
 st.subheader('Hospital Data Pivot Table')
