@@ -1,14 +1,12 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Dec  2 14:48:54 2020
+Created on Thu Dec 16 00:52:53 2021
 
-@author: hantswilliams
+@author: manle
 
-TO RUN: 
-    streamlit run week13_streamlit.py
-
+Streamlit Deployment
 """
+
 
 import streamlit as st
 import pandas as pd
@@ -17,50 +15,70 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import time
-
+from janitor import clean_names, remove_empty
 
 
 @st.cache
 def load_hospitals():
-    df_hospital_2 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_hospital_2.csv')
-    return df_hospital_2
-
-@st.cache
-def load_inatpatient():
-    df_inpatient_2 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_inpatient_2.csv')
-    return df_inpatient_2
+    hospital_info = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_hospital_2.csv')
+    return hospital_info
 
 @st.cache
 def load_outpatient():
-    df_outpatient_2 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_outpatient_2.csv')
-    return df_outpatient_2
+    outpatient2015 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_outpatient_2.csv')
+    return outpatient2015
+
+@st.cache
+def load_inpatient():
+    inpatient2015 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_inpatient_2.csv')
+    return inpatient2015
 
 
-st.title('Medicare — Expenses - NY / NY State')
 
 
+st.title('Medicare — Expenses - National')
 
-    
-    
-# FAKE LOADER BAR TO STIMULATE LOADING    
-# my_bar = st.progress(0)
-# for percent_complete in range(100):
-#     time.sleep(0.1)
-#     my_bar.progress(percent_complete + 1)
-  
+ 
 
 st.write('Hello, *World!* :sunglasses:') 
   
 # Load the data:     
-df_hospital_2 = load_hospitals()
-df_inpatient_2 = load_inatpatient()
-df_outpatient_2 = load_outpatient()
-
+hospital_info = load_hospitals()
+outpatient2015 = load_outpatient()
+inpatient2015 = load_inpatient()
 
 
 # Preview the dataframes 
 st.header('Hospital Data Preview')
-st.dataframe(df_hospital_2)
+st.dataframe(hospital_info)
+
+st.header('Outpatient Data Preview')
+st.dataframe(outpatient2015)
+
+st.header('Inpatient Data Preview')
+st.dataframe(inpatient2015)
+
+# Cleaning the data
+df_hospital = clean_names(hospital_info)
+df_hospital = remove_empty(hospital_info)
+
+df_inpatient = clean_names(inpatient2015)
+df_inpatient = remove_empty(inpatient2015)
+
+df_outpatient = clean_names(outpatient2015)
+df_outpatient = remove_empty(outpatient2015)
+
+# Merging Datasets 
+st.header('Hospital/Outpatient Merged Data')
+df_merge_outpt = df_outpatient.merge(df_hospital, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
+st.dataframe(df_merge_outpt)
+
+st.header('Hospital/Inpatient Merged Data')
+df_merge_inpt = df_inpatient.merge(df_hospital, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
+st.dataframe(df_merge_outpt)
+
+
+
 
 # Quickly creating a pivot table 
 st.subheader('Hospital Data Pivot Table')
