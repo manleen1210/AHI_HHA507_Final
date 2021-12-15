@@ -165,7 +165,7 @@ MNC_fig1 = px.bar(NY_NonSB_Outpatient_MNCs, x='index', y='mortality_national_com
 st.plotly_chart(MNC_fig1)
 
 Avg_outpt_NY_Services = NY_NonSB_Outpatient_MNCs_pivot['outpatient_services'].mean()
-st.dataframe(Avg_outpt_NY_Services)
+st.markdown(int(Avg_outpt_NY_Services))
 
 # Question 4
 st.subheader('Question 4')
@@ -185,7 +185,7 @@ MNC_fig2 = px.bar(NY_NonSB_Inpatient_MNCs, x='index', y='mortality_national_comp
 st.plotly_chart(MNC_fig2)
 
 Avg_inpt_NY_Discharges = NY_NonSB_Inpatient_MNCs_pivot['total_discharges'].mean()
-st.dataframe(Avg_inpt_NY_Discharges)
+st.markdown(int(Avg_inpt_NY_Discharges))
 
 
 # Question 5
