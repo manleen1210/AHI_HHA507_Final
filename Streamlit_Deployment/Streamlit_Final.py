@@ -95,6 +95,8 @@ nonsb_merge_inpt_preview = nonsb_merge_inpt.sample(20)
 st.dataframe(nonsb_merge_inpt_preview)
 
 
+# Question 1
+st.subheader('Question 1')
 st.write('Question1: How does the data for Stony Brook compare to other outpatient facilities for the most expensive APCs?')
 st.markdown('Based on the two pivot tables here, we can see that the most expensive outpatient APC at Stonybrook is 0074 - Level IV Endoscopy Upper Airway. The most expensive outpatient APC in non Stonybrook facilities is also 0074 - Level IV Endoscopy Upper Airway, however the average total payment for this APC at Stonybrook is $2307.21 whereas outside of Stonybrook the average total payment is $2783.802785')
 
@@ -103,15 +105,58 @@ st.subheader('StonyBrook Outpatient APCs Pivot Table')
 SB_Outpatient_APCs_pivot = sb_merge_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
 SB_Outpatient_APCs_pivot_desc = SB_Outpatient_APCs_pivot.sort_values(['average_total_payments'], ascending=False)
 st.dataframe(SB_Outpatient_APCs_pivot_desc)
-# SB Average total payments and APCs
-APC_bar1 = SB_Outpatient_APCs_pivot['average_total_payments'].value_counts().reset_index()
-APC_fig1 = px.bar(APC_bar1, x='index', y='average_total_payments')
-st.plotly_chart(APC_fig1)
 
 st.subheader('Non-StonyBrook Outpatient APCs Pivot Table')
 NonSB_Outpatient_APCs_pivot = nonsb_merge_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
 NonSB_Outpatient_APCs_pivot_desc = NonSB_Outpatient_APCs_pivot.sort_values(['average_total_payments'], ascending=False)
 st.dataframe(NonSB_Outpatient_APCs_pivot_desc)
+
+# Question 2
+st.subheader('Question 2')
+st.write('Question2: How does the data for Stony Brook compare to other inpatient facilities for the most expensive DRGs?')
+st.markdown('Based on the pivot tables shown below, at StonyBrook 003 - ECMO OR TRACH W MV >96 HRS OR PDX EXC FACE, MOUTH & NECK W MAJ O.R.	with an average total payment of $216636.88 is the most expensive inpatient DRG whereas 001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC with an average total payment of $449486.11 is the most expensive DRG at non StonyBrook inpatient facilities ')
+
+# Stony Brook -> Most expensive inpatient DRGs
+st.subheader('StonyBrook Inpatient DRGs Pivot Table')
+SB_Inpatient_DRGs_pivot = sb_merge_inpt.pivot_table(index=['provider_id','drg_definition'],values=['average_total_payments'])
+SB_Inpatient_DRGs_pivot_desc = SB_Inpatient_DRGs_pivot.sort_values(['average_total_payments'], ascending=False)
+st.dataframe(SB_Inpatient_DRGs_pivot_desc)
+
+st.subheader('Non-StonyBrook Inpatient DRGs Pivot Table')
+NonSB_Inpatient_DRGs_pivot = nonsb_merge_inpt.pivot_table(index=['provider_id','drg_definition'],values=['average_total_payments'])
+NonSB_Inpatient_DRGs_pivot_desc = NonSB_Inpatient_DRGs_pivot.sort_values(['average_total_payments'], ascending=False)
+st.dataframe(NonSB_Inpatient_DRGs_pivot_desc)
+
+
+# All NY data except Stonybrook 
+
+st.subheader('All NY data except StonyBrook (Outpatient)')
+NY_nonsb_merge_outpt = nonsb_merge_outpt[nonsb_merge_outpt['provider_state'] == 'NY']
+NY_nonsb_merge_outpt_preview = NY_nonsb_merge_outpt.sample(10)
+st.dataframe(NY_nonsb_merge_outpt_preview)
+
+st.subheader('All NY data except StonyBrook (Inpatient)')
+NY_nonsb_merge_inpt = nonsb_merge_inpt[nonsb_merge_inpt['provider_state'] == 'NY']
+NY_nonsb_merge_inpt_preview = NY_nonsb_merge_inpt.sample(10)
+st.dataframe(NY_nonsb_merge_inpt_preview)
+
+# Question 3
+st.subheader('Question 3')
+st.write('Question3: How does the data for Stony Brook compare to other NY outpatient facilities when looking at the mortality national comparison and outpatient services?')
+st.markdown('xx')
+# Stony Brook -> NY (mortality national comparison (MNC)) (Outpatient)
+st.subheader('Stonybrook Outpatient Mortality National Comparison Pivot Table')
+SB_Outpatient_MNCs_pivot = sb_merge_outpt.pivot_table(index=['provider_id','mortality_national_comparison'],values=['outpatient_services'])
+st.dataframe(SB_Outpatient_MNCs_pivot)
+df_SB_Outpatient_MNCs = sb_merge_outpt['mortality_national_comparison','outpatient_services'].value_counts().reset_index()
+st.bar_chart(df_SB_Outpatient_MNCs)
+
+st.subheader('Non Stonybrook NY Outpatient Mortality National Comparison Pivot Table')
+NY_NonSB_Outpatient_MNCs_pivot = NY_nonsb_merge_outpt_nonull.pivot_table(index=['provider_id','mortality_national_comparison'],values=['outpatient_services'])
+st.dataframe(NY_NonSB_Outpatient_MNCs_pivot)
+df_NY_NonSB_Outpatient_MNCs = NY_nonsb_merge_outpt_nonull['mortality_national_comparison','outpatient_services'].value_counts().reset_index()
+st.bar_chart(df_NY_NonSB_Outpatient_MNCs)
+
 
 
 
