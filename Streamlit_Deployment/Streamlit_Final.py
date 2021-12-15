@@ -64,7 +64,7 @@ st.dataframe(df_merge_outpt)
 
 st.header('Hospital/Inpatient Merged Data')
 df_merge_inpt = inpatient2015.merge(hospital_info, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
-st.dataframe(df_merge_outpt)
+st.dataframe(df_merge_inpt)
 
 # Stony brook data for Hospital/outpatient merged dataset
 sb_merge_outpt = df_merge_outpt[df_merge_outpt['provider_id'] == '330393']
