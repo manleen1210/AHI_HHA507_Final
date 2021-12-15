@@ -6,4 +6,3 @@ seaborn
 sklearn
 streamlit
 plotly
-janitor

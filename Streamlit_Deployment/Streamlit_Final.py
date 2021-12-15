@@ -58,16 +58,6 @@ st.dataframe(outpatient2015)
 st.header('Inpatient Data Preview')
 st.dataframe(inpatient2015)
 
-# Cleaning the data
-df_hospital = clean_names(hospital_info)
-df_hospital = remove_empty(hospital_info)
-
-df_inpatient = clean_names(inpatient2015)
-df_inpatient = remove_empty(inpatient2015)
-
-df_outpatient = clean_names(outpatient2015)
-df_outpatient = remove_empty(outpatient2015)
-
 # Merging Datasets 
 st.header('Hospital/Outpatient Merged Data')
 df_merge_outpt = df_outpatient.merge(df_hospital, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
