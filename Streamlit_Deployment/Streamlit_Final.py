@@ -140,6 +140,11 @@ NY_nonsb_merge_inpt = nonsb_merge_inpt[nonsb_merge_inpt['provider_state'] == 'NY
 NY_nonsb_merge_inpt_preview = NY_nonsb_merge_inpt.sample(10)
 st.dataframe(NY_nonsb_merge_inpt_preview)
 
+#Cleaning columns of interest
+NY_nonsb_merge_outpt_nonull = NY_nonsb_merge_outpt[~NY_nonsb_merge_outpt['mortality_national_comparison'].isnull()]
+NY_nonsb_merge_inpt_nonull = NY_nonsb_merge_inpt[~NY_nonsb_merge_inpt['mortality_national_comparison'].isnull()]
+
+
 # Question 3
 st.subheader('Question 3')
 st.write('Question3: How does the data for Stony Brook compare to other NY outpatient facilities when looking at the mortality national comparison and outpatient services?')
