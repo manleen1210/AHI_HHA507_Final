@@ -105,7 +105,7 @@ SB_Outpatient_APCs_pivot_desc = SB_Outpatient_APCs_pivot.sort_values(['average_t
 st.dataframe(SB_Outpatient_APCs_pivot_desc)
 # SB Average total payments and APCs
 APC_bar1 = SB_Outpatient_APCs_pivot['average_total_payments'].value_counts().reset_index()
-APC_fig1 = px.bar(APC_bar1, x='apc', y='average_total_payments')
+APC_fig1 = px.bar(APC_bar1, x='index', y='average_total_payments')
 st.plotly_chart(APC_fig1)
 
 st.subheader('Non-StonyBrook Outpatient APCs Pivot Table')
