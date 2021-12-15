@@ -148,7 +148,8 @@ NY_nonsb_merge_inpt_nonull = NY_nonsb_merge_inpt[~NY_nonsb_merge_inpt['mortality
 # Question 3
 st.subheader('Question 3')
 st.write('Question3: How does the data for Stony Brook compare to other NY outpatient facilities when looking at the mortality national comparison and outpatient services?')
-st.markdown('The pivot tables here show that the Mortality rate for Stony Brook is Above the National Average whereas the other NY hospitals are much more varied ')
+st.markdown('The pivot tables here show that the Mortality rate for Stony Brook is Above the National Average whereas majority of NY hospitals rank the same as national average in mortality and also have a much higher rate of outpatient services')
+
 # Stony Brook -> NY (mortality national comparison (MNC)) (Outpatient)
 st.subheader('Stonybrook Outpatient Mortality National Comparison Pivot Table')
 SB_Outpatient_MNCs_pivot = sb_merge_outpt.pivot_table(index=['provider_id','mortality_national_comparison'],values=['outpatient_services'])
@@ -158,9 +159,24 @@ st.subheader('Non Stonybrook NY Outpatient Mortality National Comparison Pivot T
 NY_NonSB_Outpatient_MNCs_pivot = NY_nonsb_merge_outpt_nonull.pivot_table(index=['provider_id','mortality_national_comparison'],values=['outpatient_services'])
 st.dataframe(NY_NonSB_Outpatient_MNCs_pivot)
 NY_NonSB_Outpatient_MNCs = NY_nonsb_merge_outpt_nonull['mortality_national_comparison'].value_counts().reset_index()
-st.dataframe(NY_NonSB_Outpatient_MNCs)
+MNC_fig1 = px.bar(NY_NonSB_Outpatient_MNCs, x='index', y='mortality_national_comparison')
+st.plotly_chart(MNC_fig1)
 
-MNC_fig2 = px.bar(NY_NonSB_Outpatient_MNCs, x='index', y='mortality_national_comparison')
+# Question 4
+st.subheader('Question 4')
+st.write('Question4: How does the data for Stony Brook compare to other NY inpatient facilities when looking at the mortality national comparison and total discharges?')
+st.markdown('xx')
+
+# Stony Brook -> NY (mortality national comparison (MNC)) (Inpatient)
+st.subheader('StonyBrook Inpatient Mortality National Comparison Pivot Table')
+SB_Inpatient_MNCs_pivot = sb_merge_inpt.pivot_table(index=['provider_id','mortality_national_comparison'],values=['total_discharges'])
+st.dataframe(SB_Inpatient_MNCs_pivot)
+
+st.subheader('Non Stonybrook NY Inpatient Mortality National Comparison Pivot Table')
+NY_NonSB_Inpatient_MNCs_pivot = NY_nonsb_merge_inpt_nonull.pivot_table(index=['provider_id','mortality_national_comparison'],values=['total_discharges'])
+st.dataframe(NY_NonSB_Inpatient_MNCs_pivot)
+NY_NonSB_Inpatient_MNCs = NY_nonsb_merge_inpt_nonull['mortality_national_comparison'].value_counts().reset_index()
+MNC_fig2 = px.bar(NY_NonSB_Inpatient_MNCs, x='index', y='mortality_national_comparison')
 st.plotly_chart(MNC_fig2)
 
 
