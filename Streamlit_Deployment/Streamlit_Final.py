@@ -59,13 +59,39 @@ st.dataframe(inpatient2015)
 
 # Merging Datasets 
 st.header('Hospital/Outpatient Merged Data')
-df_merge_outpt = df_outpatient.merge(df_hospital, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
+df_merge_outpt = df_outpatient.merge(hospital_info, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
 st.dataframe(df_merge_outpt)
 
 st.header('Hospital/Inpatient Merged Data')
-df_merge_inpt = df_inpatient.merge(df_hospital, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
+df_merge_inpt = df_inpatient.merge(hospital_info, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
 st.dataframe(df_merge_outpt)
 
+# Stony brook data for Hospital/outpatient merged dataset
+sb_merge_outpt = df_merge_outpt[df_merge_outpt['provider_id'] == '330393']
+st.dataframe(sb_merge_outpt)
+
+# Non Stony Brook Data for Hospital/Outpatient merged dataset
+nonsb_merge_outpt = df_merge_outpt[df_merge_outpt['provider_id'] != '330393']
+st.dataframe(nonsb_merge_outpt)
+
+# Stony brook data for Hospital/Inpatient merged dataset
+sb_merge_inpt = df_merge_inpt[df_merge_inpt['provider_id'] == '330393']
+st.dataframe(sb_merge_inpt)
+
+# Non Stony Brook Data for Hospital/Inpatient merged dataset
+nonsb_merge_inpt = df_merge_inpt[df_merge_inpt['provider_id'] != '330393']
+st.dataframe(nonsb_merge_inpt)
+
+
+st.write('Question1: How does the data for Stony Brook compare to other outpatient facilities for the most expensive APCs?')
+# Stony Brook -> Most expensive outpatient APCs
+st.subheader('StonyBrook Outpatient APCs Pivot Table')
+SB_Outpatient_APCs_pivot = sb_merge_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
+st.dataframe(SB_Outpatient_APCs_pivot)
+
+st.subheader('Non-StonyBrook Outpatient APCs Pivot Table')
+NonSB_Outpatient_APCs_pivot = nonsb_merge_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
+st.dataframe(NonSB_Outpatient_APCs_pivot)
 
 
 
