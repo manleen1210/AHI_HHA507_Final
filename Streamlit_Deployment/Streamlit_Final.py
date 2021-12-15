@@ -96,18 +96,24 @@ st.dataframe(nonsb_merge_inpt_preview)
 
 
 st.write('Question1: How does the data for Stony Brook compare to other outpatient facilities for the most expensive APCs?')
+st.markdown('Based on the two pivot tables here, we can see that the most expensive outpatient APC at Stonybrook is 0074 - Level IV Endoscopy Upper Airway. The most expensive outpatient APC in non Stonybrook facilities is also 0074 - Level IV Endoscopy Upper Airway, however the average total payment for this APC at Stonybrook is $2307.21 whereas outside of Stonybrook the average total payment is $2783.802785')
+
 # Stony Brook -> Most expensive outpatient APCs
 st.subheader('StonyBrook Outpatient APCs Pivot Table')
 SB_Outpatient_APCs_pivot = sb_merge_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
 SB_Outpatient_APCs_pivot_desc = SB_Outpatient_APCs_pivot.sort_values(['average_total_payments'], ascending=False)
 st.dataframe(SB_Outpatient_APCs_pivot_desc)
+# SB Average total payments and APCs
+APC_bar1 = SB_Outpatient_APCs_pivot['average_total_payments'].value_counts().reset_index()
+APC_fig1 = px.bar(APC_bar1, x='apc', y='average_total_payments')
+st.plotly_chart(APC_fig1)
 
 st.subheader('Non-StonyBrook Outpatient APCs Pivot Table')
 NonSB_Outpatient_APCs_pivot = nonsb_merge_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
 NonSB_Outpatient_APCs_pivot_desc = NonSB_Outpatient_APCs_pivot.sort_values(['average_total_payments'], ascending=False)
 st.dataframe(NonSB_Outpatient_APCs_pivot_desc)
 
-st.markdown('Based on the two pivot tables here, we can see that the most expensive outpatient APC at Stonybrook is 0074 - Level IV Endoscopy Upper Airway. The most expensive outpatient APC in non Stonybrook facilities is also 0074 - Level IV Endoscopy Upper Airway, however the average total payment for this APC at Stonybrook is $2307.21 whereas outside of Stonybrook the average total payment is $2783.802785')
+
 
 # Quickly creating a pivot table 
 st.subheader('Hospital Data Pivot Table')
