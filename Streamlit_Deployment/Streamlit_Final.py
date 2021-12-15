@@ -15,7 +15,6 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import time
-from janitor import clean_names, remove_empty
 
 
 @st.cache
