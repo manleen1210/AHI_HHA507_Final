@@ -162,10 +162,14 @@ NY_NonSB_Outpatient_MNCs = NY_nonsb_merge_outpt_nonull['mortality_national_compa
 MNC_fig1 = px.bar(NY_NonSB_Outpatient_MNCs, x='index', y='mortality_national_comparison')
 st.plotly_chart(MNC_fig1)
 
+Outpt_services = NY_nonsb_merge_outpt_nonull['outpatient_services'].value_counts().reset_index()
+Oupt_fig1 = px.bar(Outpt_services, x='index', y='outpatient_services')
+st.plotly_chart(Outpt_fig1)
+
 # Question 4
 st.subheader('Question 4')
 st.write('Question4: How does the data for Stony Brook compare to other NY inpatient facilities when looking at the mortality national comparison and total discharges?')
-st.markdown('xx')
+st.markdown('StonyBrook facilities fall in the above national average in the mortality comparison and majority of other inpatient NY facilities fall in the same as national average for mortality rates. The total discharges for ')
 
 # Stony Brook -> NY (mortality national comparison (MNC)) (Inpatient)
 st.subheader('StonyBrook Inpatient Mortality National Comparison Pivot Table')
