@@ -160,7 +160,8 @@ st.dataframe(NY_NonSB_Outpatient_MNCs_pivot)
 NY_NonSB_Outpatient_MNCs = NY_nonsb_merge_outpt_nonull['mortality_national_comparison'].value_counts().reset_index()
 st.dataframe(NY_NonSB_Outpatient_MNCs)
 
-
+MNC_fig2 = px.bar(NY_NonSB_Outpatient_MNCs, x='index', y='mortality_national_comparison')
+st.plotly_chart(MNC_fig2)
 
 
 
