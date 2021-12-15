@@ -58,6 +58,11 @@ st.header('Inpatient Data Preview')
 st.dataframe(inpatient2015)
 
 # Merging Datasets 
+
+hospital_info['provider_id'] = hospital_info['provider_id'].astype(str)
+outpatient2015['provider_id'] = outpatient2015['provider_id'].astype(str)
+inpatient2015['provider_id'] = inpatient2015['provider_id'].astype(str)
+
 st.header('Hospital/Outpatient Merged Data')
 df_merge_outpt = outpatient2015.merge(hospital_info, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
 st.dataframe(df_merge_outpt)
