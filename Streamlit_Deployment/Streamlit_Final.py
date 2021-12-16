@@ -198,7 +198,6 @@ st.subheader('Effectiveness of care vs Readmission Comparison Pivot Table')
 readmission_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'effectiveness_of_care_national_comparison'],values=['readmission_national_comparison_footnote'])
 st.dataframe(readmission_pivot)
 
-readmission_hospital_nonull['effectiveness_of_care_national_comparison'] = readmission_hospital_nonull['effectiveness_of_care_national_comparison'].astype(float)
 readmission_hospital_nonull['readmission_national_comparison_footnote'] = outpatient2015['readmission_national_comparison_footnote'].astype(float)
 
 
