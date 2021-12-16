@@ -198,11 +198,11 @@ st.subheader('Effectiveness of care vs Readmission Comparison Pivot Table')
 readmission_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'effectiveness_of_care_national_comparison'],values=['readmission_national_comparison_footnote'])
 st.dataframe(readmission_pivot)
 
-readmission_hospital_nonull['readmission_national_comparison_footnote'] = outpatient2015['readmission_national_comparison_footnote'].astype(float)
-
-
-df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']]
-st.bar_chart(df_Chart1)
+# Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
+readmission_hospital_nonull['effectiveness_of_care_national_comparison'] = readmission_hospital_nonull['effectiveness_of_care_national_comparison'].astype(float)
+ readmission_hospital_nonull['readmission_national_comparison_footnote'] = readmission_hospital_nonull['readmission_national_comparison_footnote'].astype(float)
+ df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']]
+ st.bar_chart(df_Chart1)
 
 
 #Question 6 
@@ -210,8 +210,15 @@ st.subheader('Question 6')
 st.write('Question6: What is the correlation between effectiveness of care compared to the safety of care national comparison?')
 st.markdown('xx')
 st.subheader('Effectiveness of care vs Safety of Care Pivot Table')
-Care_effectiveness_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'safety_of_care_national_comparison'],values=['effectiveness_of_care_national_comparison_footnote'])
+Care_effectiveness_pivot = effectiveness_hospital_nonull.pivot_table(index=['state', 'safety_of_care_national_comparison'],values=['effectiveness_of_care_national_comparison_footnote'])
 st.dataframe(Care_effectiveness_pivot)
+
+# Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
+# effectiveness_hospital_nonull['safety_of_care_national_comparison'] = effectiveness_hospital_nonull['safety_of_care_national_comparison'].astype(float)
+# effectiveness_hospital_nonull['effectiveness_of_care_national_comparison_footnote'] = effectiveness_hospital_nonull['effectiveness_of_care_national_comparison_footnote'].astype(float)
+# df_Chart2 = readmission_hospital_nonull[['safety_of_care_national_comparison', 'effectiveness_of_care_national_comparison_footnote']]
+# st.bar_chart(df_Chart2)
+
 
 # Quickly creating a pivot table 
 st.subheader('Hospital Data Pivot Table')
