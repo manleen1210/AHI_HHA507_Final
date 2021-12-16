@@ -15,6 +15,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import time
+import matplotlib.pyplot as plt
 
 
 @st.cache
@@ -204,6 +205,8 @@ readmission_hospital_nonull['readmission_national_comparison_footnote'] = readmi
 df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']]
 st.bar_chart(df_Chart1)
 
+fig= plt.bar(effectiveness_of_care_national_comparison, readmission_national_comparison_footnote )
+st.pyplot(fig)
 
 #Question 6 
 st.subheader('Question 6')
