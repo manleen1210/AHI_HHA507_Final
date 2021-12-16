@@ -200,13 +200,9 @@ readmission_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'eff
 st.dataframe(readmission_pivot)
 
 # Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
-readmission_hospital_nonull['effectiveness_of_care_national_comparison'] = readmission_hospital_nonull['effectiveness_of_care_national_comparison'].astype(str)
-readmission_hospital_nonull['readmission_national_comparison_footnote'] = readmission_hospital_nonull['readmission_national_comparison_footnote'].astype(str)
 df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']]
-st.bar_chart(df_Chart1)
+df_Chart1.plot.scatter(x='effectiveness_of_care_national_comparison', y = 'readmission_national_comparison_footnote')
 
-fig= plt.bar('effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote')
-st.pyplot(fig, **kwargs)
 
 #Question 6 
 st.subheader('Question 6')
@@ -219,8 +215,8 @@ st.dataframe(Care_effectiveness_pivot)
 # Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
 # effectiveness_hospital_nonull['safety_of_care_national_comparison'] = effectiveness_hospital_nonull['safety_of_care_national_comparison'].astype(float)
 # effectiveness_hospital_nonull['effectiveness_of_care_national_comparison_footnote'] = effectiveness_hospital_nonull['effectiveness_of_care_national_comparison_footnote'].astype(float)
-# df_Chart2 = readmission_hospital_nonull[['safety_of_care_national_comparison', 'effectiveness_of_care_national_comparison_footnote']]
-# st.bar_chart(df_Chart2)
+# fig2 = plt.bar('safety_of_care_national_comparison', 'effectiveness_of_care_national_comparison_footnote')
+# st.pyplot(fig2)
 
 
 # Quickly creating a pivot table 
