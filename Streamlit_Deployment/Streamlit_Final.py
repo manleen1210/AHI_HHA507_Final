@@ -199,8 +199,8 @@ readmission_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'eff
 st.dataframe(readmission_pivot)
 
 # Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
-# readmission_hospital_nonull['effectiveness_of_care_national_comparison'] = readmission_hospital_nonull['effectiveness_of_care_national_comparison'].astype(float)
-# readmission_hospital_nonull['readmission_national_comparison_footnote'] = readmission_hospital_nonull['readmission_national_comparison_footnote'].astype(float)
+readmission_hospital_nonull['effectiveness_of_care_national_comparison'] = readmission_hospital_nonull['effectiveness_of_care_national_comparison'].astype(str)
+readmission_hospital_nonull['readmission_national_comparison_footnote'] = readmission_hospital_nonull['readmission_national_comparison_footnote'].astype(float)
 df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']]
 st.bar_chart(df_Chart1)
 
