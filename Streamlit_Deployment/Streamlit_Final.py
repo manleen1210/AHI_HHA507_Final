@@ -206,7 +206,7 @@ df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_compari
 st.bar_chart(df_Chart1)
 
 fig= plt.bar('effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote')
-st.pyplot(fig)
+st.pyplot(fig, **kwargs)
 
 #Question 6 
 st.subheader('Question 6')
