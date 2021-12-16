@@ -200,22 +200,22 @@ readmission_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'eff
 st.dataframe(readmission_pivot)
 
 # Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
-df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']]
-st.dataframe(df_Chart1)
-df_Chart1.plot.scatter(x='effectiveness_of_care_national_comparison', y = 'readmission_national_comparison_footnote')
+#df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']]
+#st.dataframe(df_Chart1)
+#df_Chart1.plot.scatter(x='effectiveness_of_care_national_comparison', y = 'readmission_national_comparison_footnote')
 
 
 #Question 6 
 st.subheader('Question 6')
 st.write('Question6: What is the correlation between effectiveness of care compared to the safety of care national comparison?')
-st.markdown('Based on the scatterplot, it is difficult to see a direct correlation between effectivesness of care and safety of care national comparison data')
+st.markdown('Based on the scatterplot, it is difficult to see a direct correlation between effectiveness of care and safety of care national comparison data')
 st.subheader('Effectiveness of care vs Safety of Care Pivot Table')
 Care_effectiveness_pivot = effectiveness_hospital_nonull.pivot_table(index=['state', 'safety_of_care_national_comparison'],values=['effectiveness_of_care_national_comparison_footnote'])
 st.dataframe(Care_effectiveness_pivot)
 
 # Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
-df_Chart2 = effectiveness_hospital_nonull[['safety_of_care_national_comparison', 'effectiveness_of_care_national_comparison_footnote']]
-st.dataframe(df_Chart2)
-df_Chart2.plot.scatter(x='safety_of_care_national_comparison', y = 'effectiveness_of_care_national_comparison_footnote')
+#df_Chart2 = effectiveness_hospital_nonull[['safety_of_care_national_comparison', 'effectiveness_of_care_national_comparison_footnote']]
+#st.dataframe(df_Chart2)
+#df_Chart2.plot.scatter(x='safety_of_care_national_comparison', y = 'effectiveness_of_care_national_comparison_footnote')
 
 
