@@ -194,156 +194,28 @@ st.markdown(float(Avg_inpt_NY_Discharges))
 # Question 5
 st.subheader('Question 5')
 st.write('Question5: What is the correlation between effectiveness of care compared to the readmission national comparison?')
-st.markdown('xx')
+st.markdown('Based on the scatterplot, it is difficult to see a direct correlation between effectiveness of care and readmission national comparison data')
 st.subheader('Effectiveness of care vs Readmission Comparison Pivot Table')
 readmission_pivot = readmission_hospital_nonull.pivot_table(index=['state', 'effectiveness_of_care_national_comparison'],values=['readmission_national_comparison_footnote'])
 st.dataframe(readmission_pivot)
 
 # Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
 df_Chart1 = readmission_hospital_nonull[['effectiveness_of_care_national_comparison', 'readmission_national_comparison_footnote']]
+st.dataframe(df_Chart1)
 df_Chart1.plot.scatter(x='effectiveness_of_care_national_comparison', y = 'readmission_national_comparison_footnote')
 
 
 #Question 6 
 st.subheader('Question 6')
 st.write('Question6: What is the correlation between effectiveness of care compared to the safety of care national comparison?')
-st.markdown('xx')
+st.markdown('Based on the scatterplot, it is difficult to see a direct correlation between effectivesness of care and safety of care national comparison data')
 st.subheader('Effectiveness of care vs Safety of Care Pivot Table')
 Care_effectiveness_pivot = effectiveness_hospital_nonull.pivot_table(index=['state', 'safety_of_care_national_comparison'],values=['effectiveness_of_care_national_comparison_footnote'])
 st.dataframe(Care_effectiveness_pivot)
 
 # Attempted to create a chart to show the comparison between the two main variables but cannot make it work on Streamlit
-# effectiveness_hospital_nonull['safety_of_care_national_comparison'] = effectiveness_hospital_nonull['safety_of_care_national_comparison'].astype(float)
-# effectiveness_hospital_nonull['effectiveness_of_care_national_comparison_footnote'] = effectiveness_hospital_nonull['effectiveness_of_care_national_comparison_footnote'].astype(float)
-# fig2 = plt.bar('safety_of_care_national_comparison', 'effectiveness_of_care_national_comparison_footnote')
-# st.pyplot(fig2)
-
-
-# Quickly creating a pivot table 
-st.subheader('Hospital Data Pivot Table')
-dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
-st.dataframe(dataframe_pivot)
-
-
-
-hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
-
-
-#Bar Chart
-st.subheader('Hospital Type - NY')
-bar1 = hospitals_ny['hospital_type'].value_counts().reset_index()
-st.dataframe(bar1)
-
-st.markdown('The majority of hospitals in NY are acute care, followed by psychiatric')
-
-
-st.subheader('With a PIE Chart:')
-fig = px.pie(bar1, values='hospital_type', names='index')
-st.plotly_chart(fig)
-
-
-
-st.subheader('Map of NY Hospital Locations')
-
-hospitals_ny_gps = hospitals_ny['location'].str.strip('()').str.split(' ', expand=True).rename(columns={0: 'Point', 1:'lon', 2:'lat'}) 	
-hospitals_ny_gps['lon'] = hospitals_ny_gps['lon'].str.strip('(')
-hospitals_ny_gps = hospitals_ny_gps.dropna()
-hospitals_ny_gps['lon'] = pd.to_numeric(hospitals_ny_gps['lon'])
-hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
-
-st.map(hospitals_ny_gps)
-
-
-#Timeliness of Care
-st.subheader('NY Hospitals - Timelieness of Care')
-bar2 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().reset_index()
-fig2 = px.bar(bar2, x='index', y='timeliness_of_care_national_comparison')
-st.plotly_chart(fig2)
-
-st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national\
-        average as it relates to timeliness of care')
-
-
-
-#Drill down into INPATIENT and OUTPATIENT just for NY 
-st.title('Drill Down into INPATIENT data')
-
-
-inpatient_ny = df_inpatient_2[df_inpatient_2['provider_state'] == 'NY']
-total_inpatient_count = sum(inpatient_ny['total_discharges'])
-
-st.header('Total Count of Discharges from Inpatient Captured: ' )
-st.header( str(total_inpatient_count) )
-
-
-
-
-
-##Common D/C 
-
-common_discharges = inpatient_ny.groupby('drg_definition')['total_discharges'].sum().reset_index()
-
-
-top10 = common_discharges.head(10)
-bottom10 = common_discharges.tail(10)
-
-
-
-st.header('DRGs')
-st.dataframe(common_discharges)
-
-
-col1, col2 = st.beta_columns(2)
-
-col1.header('Top 10 DRGs')
-col1.dataframe(top10)
-
-col2.header('Bottom 10 DRGs')
-col2.dataframe(bottom10)
-
-
-
-
-#Bar Charts of the costs 
-
-costs = inpatient_ny.groupby('provider_name')['avsterage_total_payments'].sum().reset_index()
-costs['average_total_payments'] = costs['average_total_payments'].astype('int64')
-
-
-costs_medicare = inpatient_ny.groupby('provider_name')['average_medicare_payments'].sum().reset_index()
-costs_medicare['average_medicare_payments'] = costs_medicare['average_medicare_payments'].astype('int64')
-
-
-costs_sum = costs.merge(costs_medicare, how='left', left_on='provider_name', right_on='provider_name')
-costs_sum['delta'] = costs_sum['average_total_payments'] - costs_sum['average_medicare_payments']
-
-
-st.title('COSTS')
-
-bar3 = px.bar(costs_sum, x='provider_name', y='average_total_payments')
-st.plotly_chart(bar3)
-st.header("Hospital - ")
-st.dataframe(costs_sum)
-
-
-#Costs by Condition and Hospital / Average Total Payments
-costs_condition_hospital = inpatient_ny.groupby(['provider_name', 'drg_definition'])['average_total_payments'].sum().reset_index()
-st.header("Costs by Condition and Hospital - Average Total Payments")
-st.dataframe(costs_condition_hospital)
-
-
-
-# hospitals = costs_condition_hospital['provider_name'].drop_duplicates()
-# hospital_choice = st.sidebar.selectbox('Select your hospital:', hospitals)
-# filtered = costs_sum["provider_name"].loc[costs_sum["provider_name"] == hospital_choice]
-# st.dataframe(filtered)
-
-
-
-
-
-
-
-
+df_Chart2 = effectiveness_hospital_nonull[['safety_of_care_national_comparison', 'effectiveness_of_care_national_comparison_footnote']]
+st.dataframe(df_Chart2)
+df_Chart2.plot.scatter(x='safety_of_care_national_comparison', y = 'effectiveness_of_care_national_comparison_footnote')
 
 
